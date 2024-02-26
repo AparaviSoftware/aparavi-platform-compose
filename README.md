@@ -2,9 +2,9 @@
 
 These are the steps to set up Aparavi using Docker Compose:
 
-1. **Unzip sourcecode.zip of the latest release**: Extract the contents of sourcecode.zip, which contains the necessary Docker Compose configuration files for Aparavi, to a directory of your choice. This directory with be populated with Aparavi data so it should be sized accordingly.
+1. **Unzip the latest release of Docker Compose for Aparavi**: Extract the contents of sourcecode.zip, which contains the necessary Docker Compose configuration files for Aparavi, to a directory of your choice. This directory with be populated with Aparavi data so it should be sized accordingly.
 
-2. **Navigate to the directory**: Open a terminal or command prompt and change the directory to where you extracted the contents of DockerCompose.zip.
+2. **Navigate to the directory**: Open a terminal or command prompt and change the directory to where you extracted the contents of the zip file.
 
 3. **Run "docker compose up -d"**: Start the Aparavi services defined in the Docker Compose configuration file in detached mode (-d), which means they will run in the background. Make sure you have Docker installed and running on your system before executing this command.
 
