@@ -57,6 +57,9 @@ services:
       - ./appagent-config:/etc/opt/aparavi-data-ia
       - ./source-data:/source
       - ./target-data:/target
+  #   - ${USERPROFILE}/:/windows
+  #   - ${HOME}:/macos
+  #   - ${HOME}:/linux
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9752/server/api"]
       interval: 10s
