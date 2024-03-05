@@ -6,7 +6,7 @@ These are the steps to set up Aparavi using Docker Compose:
 
 2. **Navigate to the directory**: Open a terminal or command prompt and change the directory to where you extracted the contents of the zip file.
 
-3. **Run "docker compose up --scale worker=1 -d"**: Start the Aparavi services defined in the Docker Compose configuration file in detached mode (-d), which means they will run in the background. The default number of workers is 1 but can be scaled to many by update the worker=1 value to something like worker=3. Make sure you have Docker installed and running on your system before executing this command.
+3. **Run "docker compose up --scale worker=0 -d"**: Start the Aparavi services defined in the Docker Compose configuration file in detached mode (-d), which means they will run in the background. The default number of workers is 0 but can be scaled to many by updating the worker=0 value to something like worker=3. This will create 3 workers that can help increase processing times. Make sure you have Docker installed and running on your system before executing this command.
 
 4. **Navigate to http://localhost**: After the services are up and running, access Aparavi by opening a web browser and navigating to http://localhost.
 
