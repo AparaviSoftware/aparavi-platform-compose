@@ -2,7 +2,7 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0.32
-    container_name: mysql_db
+    #container_name: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=aparavi
     volumes:
@@ -16,12 +16,12 @@ services:
 
   platform:
     image: aparavi/aparavi:platform-2.12.1
-    container_name: platform
+    #container_name: platform
     ports:
-      - 80:9452
+      - 9452
     environment:
       - APARAVI_PLATFORM=preview.aparavi.com
-      - APARAVI_DBHOST=mysql_db
+      - APARAVI_DBHOST=mysql
       - APARAVI_DBPORT=3306
       - APARAVI_DBUSER=root
       - APARAVI_DBPASS=aparavi 
@@ -41,11 +41,11 @@ services:
 
   appagent:
     image: aparavi/aparavi:appagt-2.12.1
-    container_name: appagent
+    #container_name: appagent
     environment:
       - APARAVI_PLATFORM=platform
       - APARAVI_PARENT=CLIENTS
-      - APARAVI_DBHOST=mysql_db
+      - APARAVI_DBHOST=mysql
       - APARAVI_DBPORT=3306
       - APARAVI_DBUSER=root
       - APARAVI_DBPASS=aparavi
@@ -69,4 +69,23 @@ services:
       platform:
         condition: service_healthy
       mysql:
+        condition: service_healthy
+
+  worker:
+    image: aparavi/aparavi:worker-2.12.1
+    environment:
+      - APARAVI_APPAGENT=appagent:9745
+      - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=12288
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9752/server/api"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      platform:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+      appagent:
         condition: service_healthy
