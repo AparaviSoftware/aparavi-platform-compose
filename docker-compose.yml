@@ -2,6 +2,8 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0.32
+    ports:
+      - 3306
     environment:
       - MYSQL_ROOT_PASSWORD=aparavi
     volumes:
@@ -53,7 +55,6 @@ services:
       - ./appagent-data:/var/lib/aparavi-data-ia
       - ./appagent-config:/etc/opt/aparavi-data-ia
       - ./source-data:/source
-      - ./target-data:/target
   #   - ${USERPROFILE}/:/windows
   #   - ${HOME}:/macos
   #   - ${HOME}:/linux
@@ -68,21 +69,21 @@ services:
       mysql:
         condition: service_healthy
 
-  worker:
-    image: aparavi/aparavi:worker-2.12.2
-    environment:
-      - APARAVI_APPAGENT=appagent:9745
-      - NODE_ENV=production
-      - NODE_OPTIONS=--max-old-space-size=12288
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9752/server/api"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-    depends_on:
-      platform:
-        condition: service_healthy
-      mysql:
-        condition: service_healthy
-      appagent:
-        condition: service_healthy
+ # worker:
+  #  image: aparavi/aparavi:worker-2.12.2
+   # environment:
+    #  - APARAVI_APPAGENT=appagent:9745
+     # - NODE_ENV=production
+      #- NODE_OPTIONS=--max-old-space-size=12288
+    # healthcheck:
+     # test: ["CMD", "curl", "-f", "http://localhost:9752/server/api"]
+      # interval: 10s
+      # timeout: 5s
+      # retries: 10
+    #depends_on:
+     # platform:
+      #  condition: service_healthy
+     # mysql:
+      #  condition: service_healthy
+     # appagent:
+      #  condition: service_healthy
