@@ -1,0 +1,100 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0.36
+    ports:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=aparavi
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    command: mysqld --innodb_print_all_deadlocks=1 --innodb_buffer_pool_instances=16 --innodb_buffer_pool_size=4GB --disable-log-bin
+    healthcheck:
+      test: ["CMD-SHELL", "exit | mysql -h localhost -P 3306 -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  platform:
+    image: aparavi/aparavi:platform-2.12.2-12092
+    ports:
+      - 80:9452
+      - 9455:9455
+    environment:
+      - APARAVI_PLATFORM=preview.aparavi.com
+      - APARAVI_DBHOST=mysql
+      - APARAVI_DBPORT=3306
+      - APARAVI_DBUSER=root
+      - APARAVI_DBPASS=aparavi 
+      - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=12288
+    volumes:
+      - ./platform-data:/var/lib/aparavi-data-ia
+      - ./platform-config:/etc/opt/aparavi-data-ia
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9452/server/api"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  app:
+    image: aparavi/aparavi:app-2.12.2-12092
+    ports:
+      - 9545:9545
+    environment:
+      - APARAVI_PLATFORM=platform
+      - APARAVI_PARENT=CLIENTS
+      - APARAVI_DBHOST=mysql
+      - APARAVI_DBPORT=3306
+      - APARAVI_DBUSER=root
+      - APARAVI_DBPASS=aparavi
+      - APARAVI_ANALYTICS=true
+      - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=12288
+    volumes:
+      - ./app-data:/var/lib/aparavi-data-ia
+      - ./app-config:/etc/opt/aparavi-data-ia
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9552/server/api"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      platform:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+
+  agt:
+    image: aparavi/aparavi:agt-2.12.2-12092
+    environment:
+      - APARAVI_APP=app
+      - APARAVI_DBHOST=mysql
+      - APARAVI_DBPORT=3306
+      - APARAVI_DBUSER=root
+      - APARAVI_DBPASS=aparavi
+      - APARAVI_ANALYTICS=true
+      - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=12288
+    volumes:
+      - ./agt-data:/var/lib/aparavi-data-ia
+      - ./agt-config:/etc/opt/aparavi-data-ia
+      - ./source-data:/source
+  #   - ${USERPROFILE}/:/windows
+  #   - ${HOME}:/macos
+  #   - ${HOME}:/linux
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9652/server/api"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      platform:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+      app:
+        condition: service_healthy
