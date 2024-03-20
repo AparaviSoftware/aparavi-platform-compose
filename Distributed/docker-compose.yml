@@ -18,7 +18,8 @@ services:
   platform:
     image: aparavi/aparavi:platform-2.12.2-12092
     ports:
-      - 9452
+      - 80:9452
+      - 9455:9455
     environment:
       - APARAVI_PLATFORM=preview.aparavi.com
       - APARAVI_DBHOST=mysql
@@ -39,8 +40,10 @@ services:
       mysql:
         condition: service_healthy
 
-  appagent:
-    image: aparavi/aparavi:appagt-2.12.2-12092
+  app:
+    image: aparavi/aparavi:app-2.12.2-12092
+    ports:
+      - 9545:9545
     environment:
       - APARAVI_PLATFORM=platform
       - APARAVI_PARENT=CLIENTS
@@ -52,14 +55,10 @@ services:
       - NODE_ENV=production
       - NODE_OPTIONS=--max-old-space-size=12288
     volumes:
-      - ./appagent-data:/var/lib/aparavi-data-ia
-      - ./appagent-config:/etc/opt/aparavi-data-ia
-      - ./source-data:/source
-  #   - ${USERPROFILE}/:/windows
-  #   - ${HOME}:/macos
-  #   - ${HOME}:/linux
+      - ./app-data:/var/lib/aparavi-data-ia
+      - ./app-config:/etc/opt/aparavi-data-ia
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9752/server/api"]
+      test: ["CMD", "curl", "-f", "http://localhost:9552/server/api"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -69,3 +68,33 @@ services:
       mysql:
         condition: service_healthy
 
+  agt:
+    image: aparavi/aparavi:agt-2.12.2-12092
+    environment:
+      - APARAVI_APP=app
+      - APARAVI_DBHOST=mysql
+      - APARAVI_DBPORT=3306
+      - APARAVI_DBUSER=root
+      - APARAVI_DBPASS=aparavi
+      - APARAVI_ANALYTICS=true
+      - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=12288
+    volumes:
+      - ./agt-data:/var/lib/aparavi-data-ia
+      - ./agt-config:/etc/opt/aparavi-data-ia
+      - ./source-data:/source
+  #   - ${USERPROFILE}/:/windows
+  #   - ${HOME}:/macos
+  #   - ${HOME}:/linux
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9652/server/api"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      platform:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+      app:
+        condition: service_healthy
