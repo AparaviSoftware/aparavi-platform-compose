@@ -16,7 +16,7 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.12.2-12092
+    image: aparavi/aparavi:platform-2.12.3-12169
     ports:
       - 80:9452
       - 9455:9455
@@ -31,8 +31,14 @@ services:
     volumes:
       - ./platform-data:/var/lib/aparavi-data-ia
       - ./platform-config:/etc/opt/aparavi-data-ia
+      - ./update_policy.sh:/root/update_policy.sh
+        #    healthcheck:
+        #      test: ["CMD", "curl", "-f", "http://localhost:9452/server/api"]
+        #      interval: 10s
+        #      timeout: 5s
+        #      retries: 10
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9452/server/api"]
+      test: ["CMD", "bash", "/root/update_policy.sh"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -41,7 +47,7 @@ services:
         condition: service_healthy
 
   app:
-    image: aparavi/aparavi:app-2.12.2-12092
+    image: aparavi/aparavi:app-2.12.3-12169
     ports:
       - 9545:9545
     environment:
@@ -69,7 +75,7 @@ services:
         condition: service_healthy
 
   agt:
-    image: aparavi/aparavi:agt-2.12.2-12092
+    image: aparavi/aparavi:agt-2.12.3-12169
     environment:
       - APARAVI_APP=app
       - APARAVI_DBHOST=mysql
