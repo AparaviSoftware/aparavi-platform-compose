@@ -2,13 +2,14 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0.36
-    ports:
-      - 3306
+    container_name: mysql_db
     environment:
       - MYSQL_ROOT_PASSWORD=aparavi
     volumes:
       - ./mysql-data:/var/lib/mysql
     command: mysqld --innodb_print_all_deadlocks=1 --innodb_buffer_pool_instances=16 --innodb_buffer_pool_size=4GB --disable-log-bin
+    ports:
+      - 3306
     healthcheck:
       test: ["CMD-SHELL", "exit | mysql -h localhost -P 3306 -u root -p$$MYSQL_ROOT_PASSWORD"]
       interval: 10s
@@ -16,7 +17,8 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.12.2-12092
+    image: aparavi/aparavi:platform-2.12.3-12169
+    container_name: platform
     ports:
       - 9452
     environment:
@@ -24,14 +26,20 @@ services:
       - APARAVI_DBHOST=mysql
       - APARAVI_DBPORT=3306
       - APARAVI_DBUSER=root
-      - APARAVI_DBPASS=aparavi 
+      - APARAVI_DBPASS=aparavi
       - NODE_ENV=production
       - NODE_OPTIONS=--max-old-space-size=12288
     volumes:
       - ./platform-data:/var/lib/aparavi-data-ia
       - ./platform-config:/etc/opt/aparavi-data-ia
+      - ./update_policy.sh:/root/update_policy.sh
+        #    healthcheck:
+        #      test: ["CMD", "curl", "-f", "http://localhost:9452/server/api"]
+        #      interval: 10s
+        #      timeout: 5s
+        #      retries: 10
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9452/server/api"]
+      test: ["CMD", "bash", "/root/update_policy.sh"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -40,7 +48,8 @@ services:
         condition: service_healthy
 
   appagent:
-    image: aparavi/aparavi:appagt-2.12.2-12092
+    image: aparavi/aparavi:appagent-2.12.3-12169
+    container_name: appagent
     environment:
       - APARAVI_PLATFORM=platform
       - APARAVI_PARENT=CLIENTS
@@ -68,4 +77,3 @@ services:
         condition: service_healthy
       mysql:
         condition: service_healthy
-
