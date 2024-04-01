@@ -31,14 +31,13 @@ services:
     volumes:
       - ./platform-data:/var/lib/aparavi-data-ia
       - ./platform-config:/etc/opt/aparavi-data-ia
-      - ./update_policy.sh:/root/update_policy.sh
         #    healthcheck:
         #      test: ["CMD", "curl", "-f", "http://localhost:9452/server/api"]
         #      interval: 10s
         #      timeout: 5s
         #      retries: 10
     healthcheck:
-      test: ["CMD", "bash", "/root/update_policy.sh"]
+      test: ["CMD", "bash", "/app/update_policy.sh"]
       interval: 10s
       timeout: 5s
       retries: 10
