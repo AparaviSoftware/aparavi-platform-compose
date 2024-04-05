@@ -16,7 +16,7 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.12.3-12169
+    image: aparavi/aparavi:platform-2.12.4-12647
     ports:
       - 80:9452
       - 9455:9455
@@ -46,7 +46,7 @@ services:
         condition: service_healthy
 
   app:
-    image: aparavi/aparavi:app-2.12.3-12169
+    image: aparavi/aparavi:app-2.12.4-12647
     ports:
       - 9545:9545
     environment:
@@ -74,7 +74,7 @@ services:
         condition: service_healthy
 
   agt:
-    image: aparavi/aparavi:agt-2.12.3-12169
+    image: aparavi/aparavi:agt-2.12.4-12647
     environment:
       - APARAVI_APP=app
       - APARAVI_DBHOST=mysql
