@@ -17,7 +17,7 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.12.3-12169
+    image: aparavi/aparavi:platform-2.12.4-12647
     container_name: platform
     ports:
       - 9452
@@ -47,7 +47,7 @@ services:
         condition: service_healthy
 
   appagent:
-    image: aparavi/aparavi:appagent-2.12.3-12169
+    image: aparavi/aparavi:appagent-2.12.4-12647
     container_name: appagent
     environment:
       - APARAVI_PLATFORM=platform
