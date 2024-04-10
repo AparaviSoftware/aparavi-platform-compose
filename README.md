@@ -14,7 +14,7 @@ These are the steps to set up Aparavi using Docker Compose:
 
 Remember to replace "localhost" with the appropriate hostname or IP address if you're accessing the service from a remote machine. Also, ensure that the necessary ports are open and not blocked by any firewall settings.
 
-6. **Activate the deployed Aparavi platform**: Every new platform deployment will need to be activated. If you are re-deploying a platform that was previously activated and is using the existing config and data folders no additional activation is needed. Activate the platform by entering the code you received via email under Administration>Activate. Every code can only be used once. If you need another code fill out the form in HERE: http://bit.ly/3vMghl4 
+6. **Activate the deployed Aparavi platform**: Every new platform deployment will need to be activated. If you are re-deploying a platform that was previously activated and is using the existing config and data folders no additional activation is needed. Activate the platform by entering the code you received via email under Administration>Activate. Every code can only be used once. If you need another code fill out this form HERE: http://bit.ly/3vMghl4 
 
 <img width="960" alt="Activate" src="https://github.com/AparaviSoftware/DockerCompose/assets/59745347/f3b52cd4-7482-4f3d-bb9c-40a31df58df6">
 
