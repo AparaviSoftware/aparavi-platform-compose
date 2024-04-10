@@ -18,4 +18,6 @@ Remember to replace "localhost" with the appropriate hostname or IP address if y
 
 https://info.aparavi.com/signup-free
 
+<img width="960" alt="Activate" src="https://github.com/AparaviSoftware/DockerCompose/assets/59745347/f3b52cd4-7482-4f3d-bb9c-40a31df58df6">
+
 7. **Get Help**: Contact us at support@aparavi.com with any issues or inquires about the paid features of the Aparavi platform.
