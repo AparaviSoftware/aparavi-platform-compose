@@ -2,7 +2,6 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0.36
-    container_name: mysql_db
     environment:
       - MYSQL_ROOT_PASSWORD=aparavi
     volumes:
@@ -17,8 +16,7 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.12.4-12647
-    container_name: platform
+    image: aparavi/aparavi:platform-2.12.4-12864
     ports:
       - 9452
     environment:
@@ -47,8 +45,7 @@ services:
         condition: service_healthy
 
   appagent:
-    image: aparavi/aparavi:appagent-2.12.4-12647
-    container_name: appagent
+    image: aparavi/aparavi:appagent-2.12.4-12864
     environment:
       - APARAVI_PLATFORM=platform
       - APARAVI_PARENT=CLIENTS
