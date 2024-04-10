@@ -18,5 +18,6 @@ Remember to replace "localhost" with the appropriate hostname or IP address if y
 
 <img width="960" alt="Activate" src="https://github.com/AparaviSoftware/DockerCompose/assets/59745347/f3b52cd4-7482-4f3d-bb9c-40a31df58df6">
 
+7. **Add Documents to Discover**: Once the Aparavi platform is deployed you can add data to the \source-data\ folder that was created in the directory that the docker-compose.yaml was placed. Any data that is added to this folder will be analyzed by the platform. You can also add File Shares, M365, S3, Azure Blob, plus more under the sources settings.
 
-7. **Get Help or More Information**: Feel free to use the help system within the Aparavi platform by clicking the magnifying glass in the bottom right corner once you are logged in. Contact us at support@aparavi.com with any issues or inquires about the paid features of the Aparavi platform. 
+8. **Get Help or More Information**: Feel free to use the help system within the Aparavi platform by clicking the magnifying glass in the bottom right corner once you are logged in. Contact us at support@aparavi.com with any issues or inquires about the paid features of the Aparavi platform. 
