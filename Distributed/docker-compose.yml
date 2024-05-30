@@ -16,7 +16,7 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.13.0-19356
+    image: aparavi/aparavi:platform-2.13.3-20114
     ports:
       - 80:9452
       - 9455:9455
