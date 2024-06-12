@@ -13,3 +13,11 @@ These are the steps to set up Aparavi using Docker Compose:
 5. **Login to Aparavi using root:root**: Once you access Aparavi via the provided URL, log in with the username "root" and the password "root" as instructed.
 
 Remember to replace "localhost" with the appropriate hostname or IP address if you're accessing the service from a remote machine. Also, ensure that the necessary ports are open and not blocked by any firewall settings.
+
+6. **Activate the deployed Aparavi platform**: Every new platform deployment will need to be activated. If you are re-deploying a platform that was previously activated and is using the existing config and data folders no additional activation is needed. Activate the platform by entering the code you received via email under Administration>Activate. Every code can only be used once. If you need another code fill out this form HERE: http://bit.ly/3vMghl4 
+
+<img width="960" alt="Activate" src="https://github.com/AparaviSoftware/DockerCompose/assets/59745347/f3b52cd4-7482-4f3d-bb9c-40a31df58df6">
+
+7. **Add Documents to Discover**: Once the Aparavi platform is deployed you can add data to the \source-data\ folder that was created in the directory that the docker-compose.yaml was placed. Any data that is added to this folder will be analyzed by the platform. You can also add File Shares, M365, S3, Azure Blob, plus more under the sources settings.
+
+8. **Get Help or More Information**: Feel free to use the help system within the Aparavi platform by clicking the magnifying glass in the bottom right corner once you are logged in. Contact us at support@aparavi.com with any issues or inquires about the paid features of the Aparavi platform. 
