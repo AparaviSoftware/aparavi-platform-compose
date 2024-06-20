@@ -16,7 +16,7 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.13.3-20602
+    image: aparavi.jfrog.io/aparavi-docker-nonprod/platform:2.15.0-20937
     ports:
       - 9452
     environment:
@@ -30,11 +30,7 @@ services:
     volumes:
       - ./platform-data:/var/lib/aparavi-data-ia
       - ./platform-config:/etc/opt/aparavi-data-ia
-        #    healthcheck:
-        #      test: ["CMD", "curl", "-f", "http://localhost:9452/server/api"]
-        #      interval: 10s
-        #      timeout: 5s
-        #      retries: 10
+      - ./platform-dia:/root/.dia
     healthcheck:
       test: ["CMD", "bash", "/app/update_policy.sh"]
       interval: 10s
@@ -45,7 +41,9 @@ services:
         condition: service_healthy
 
   appagent:
-    image: aparavi/aparavi:appagent-2.13.3-20602
+    image: aparavi.jfrog.io/aparavi-docker-nonprod/appagt:2.15.0-20937
+    ports:
+      - 9752
     environment:
       - APARAVI_PLATFORM=platform
       - APARAVI_PARENT=CLIENTS
@@ -60,9 +58,6 @@ services:
       - ./appagent-data:/var/lib/aparavi-data-ia
       - ./appagent-config:/etc/opt/aparavi-data-ia
       - ./source-data:/source
-  #   - ${USERPROFILE}/:/windows
-  #   - ${HOME}:/macos
-  #   - ${HOME}:/linux
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9752/server/api"]
       interval: 10s
