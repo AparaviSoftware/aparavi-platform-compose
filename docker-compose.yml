@@ -15,7 +15,7 @@ services:
       retries: 10
 
   platform:
-    image: aparavi.jfrog.io/aparavi-docker-nonprod/platform:latest
+    image: aparavi/platform:latest
     ports:
       - 9452
     environment:
@@ -40,7 +40,7 @@ services:
         condition: service_healthy
 
   appagent:
-    image: aparavi.jfrog.io/aparavi-docker-nonprod/appagt:latest
+    image: aparavi/aggregator-collector:latest
     ports:
       - 9752
     environment:

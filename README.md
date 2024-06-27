@@ -27,13 +27,6 @@ Remember to replace "localhost" with the appropriate hostname or IP address if y
 
 <img width="960" alt="Activate" src="https://github.com/AparaviSoftware/DockerCompose/assets/59745347/f3b52cd4-7482-4f3d-bb9c-40a31df58df6">
 
-> ## NOTE: Activation flow for 2.15 will not work until preview.aparavi.com is updated to 2.15
-> The activation flow relies on the upstream Platform (e.g. preview.aparavi.com) to be the same version or later than the version being deployed. If the deployed container has a platform version later than upstream, you will see the activation looping in the container logs
-> ```
-> 6/18/2024, 01:57:34 PM ENTRY.SH: Waiting for Activation Code...
-> 06:57:44 6/18/2024, 01:57:44 PM ENTRY.SH: [WARNING] Activation failed; unable to pull activation code from upstream platform. Contact support@aparavi.com for help.
-> ```
-
 6. **Add Documents to Discover**: Once the Aparavi platform is deployed you can add data to the \source-data\ folder that was created in the directory that the docker-compose.yaml was placed. Any data that is added to this folder will be analyzed by the platform. You can also add File Shares, M365, S3, Azure Blob, plus more under the sources settings.
 
 7. **Get Help or More Information**: Feel free to use the help system within the Aparavi platform by clicking the magnifying glass in the bottom right corner once you are logged in. Contact us at support@aparavi.com with any issues or inquires about the paid features of the Aparavi platform. 
