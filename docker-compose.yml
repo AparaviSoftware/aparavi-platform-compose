@@ -19,7 +19,7 @@ services:
     ports:
       - 9452
     environment:
-      - APARAVI_PLATFORM=preview.aparavi.com
+      - APARAVI_PLATFORM=ea.aparavi.com
       - APARAVI_DBHOST=mysql
       - APARAVI_DBPORT=3306
       - APARAVI_DBUSER=root
