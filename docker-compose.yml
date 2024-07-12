@@ -16,11 +16,11 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.13.3-20602
+    image: aparavi/aparavi:platform-2.13.3-21447
     ports:
       - 9452
     environment:
-      - APARAVI_PLATFORM=preview.aparavi.com
+      - APARAVI_PLATFORM=ea.aparavi.com
       - APARAVI_DBHOST=mysql
       - APARAVI_DBPORT=3306
       - APARAVI_DBUSER=root
@@ -45,7 +45,7 @@ services:
         condition: service_healthy
 
   appagent:
-    image: aparavi/aparavi:appagent-2.13.3-20602
+    image: aparavi/aparavi:appagent-2.13.3-21447
     environment:
       - APARAVI_PLATFORM=platform
       - APARAVI_PARENT=CLIENTS
