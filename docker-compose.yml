@@ -15,7 +15,7 @@ services:
       retries: 10
 
   platform:
-    image: aparavi/aparavi:platform-2.13.3-21447
+    image: aparavi/aparavi:2.20.2-25611
     ports:
       - 9452
     environment:
@@ -29,13 +29,11 @@ services:
     volumes:
       - ./platform-data:/var/lib/aparavi-data-ia
       - ./platform-config:/etc/opt/aparavi-data-ia
-        #    healthcheck:
-        #      test: ["CMD", "curl", "-f", "http://localhost:9452/server/api"]
-        #      interval: 10s
-        #      timeout: 5s
-        #      retries: 10
+      - type: bind
+        source: ./python/site-packages
+        target: /opt/aparavi-data-ia/app/engine/linux/lib/python3.10/site-packages
     healthcheck:
-      test: ["CMD", "bash", "/app/update_policy.sh"]
+      test: ["CMD", "curl", "--fail","--head", "http://localhost:9452/server/api"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -44,8 +42,9 @@ services:
         condition: service_healthy
 
   appagent:
-    image: aparavi/aparavi:appagent-2.13.3-21447
+    image: aparavi/aparavi:2.20.2-25611
     environment:
+      - APPTYPE=appagt
       - APARAVI_PLATFORM=platform
       - APARAVI_PARENT=CLIENTS
       - APARAVI_DBHOST=mysql
@@ -59,9 +58,9 @@ services:
       - ./appagent-data:/var/lib/aparavi-data-ia
       - ./appagent-config:/etc/opt/aparavi-data-ia
       - ./source-data:/source
-  #   - ${USERPROFILE}/:/windows
-  #   - ${HOME}:/macos
-  #   - ${HOME}:/linux
+      - type: bind
+        source: ./python/site-packages
+        target: /opt/aparavi-data-ia/app/engine/linux/lib/python3.10/site-packages
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9752/server/api"]
       interval: 10s
